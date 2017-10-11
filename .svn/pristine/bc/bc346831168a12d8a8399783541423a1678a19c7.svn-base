@@ -1,0 +1,41 @@
+/*
+* @Author: hu sir
+* @Date:   2017-07-26 13:10:20
+* @Last Modified by:   hu sir
+* @Last Modified time: 2017-07-26 14:38:21
+*/
+
+header {padding: 0.45rem;}
+header .logo {float: left;width: 45%;}
+header .logo img {display: block;width: 100%;height: auto;}
+header .title {float: right;}
+header .title span {display: block;text-align: right;font-size: 0.85rem;color: #646464;}
+header .title span img {display: inline-block;vertical-align: middle;width: 1.5rem;height: auto;margin-right: 0.4rem;}
+header .title a {display: block;width: 1.5rem;float: right;margin-top: 0.75rem}
+header .title a img {display: block;width: 100%;height: auto;}
+
+.msg .msg_title {width: 100%;height: 1.75rem;text-align: center;line-height: 1.75rem;background-color: #84C5EC;color: #fff;font-size: 0.75rem;}
+.msg .msg_list {padding: 0.5rem 0.75rem;}
+.msg .msg_list li {display: block;height: 1.25rem;line-height: 1.25rem;font-size: 0.7rem;}
+.msg .msg_list li i {color: #C29337}
+.mask {width: 100%;height: 0.4rem;background-color: #EFEFF4;}
+
+.msg_pay .pay_title {width: 100%;height: 1.75rem;text-align: center;line-height: 1.75rem;background-color: #84C5EC;color: #fff;font-size: 0.75rem;}
+.msg_pay .pay_ipt {padding: 0.5rem;}
+.msg_pay .pay_ipt li {height: 2.5rem;}
+.msg_pay .pay_ipt li span {display: inline-block;line-height: 2.5rem;font-size: 0.75rem;}
+.msg_pay .pay_ipt li #see_about {float: right;padding: 0.45rem 1.5rem;border: 1px solid #95989A;border-radius: 4px;font-size: 0.72rem}
+.msg_pay .pay_ipt li #car {border: 1px solid #95989A;width: 86%;padding: 0.5rem 1rem;display: inline-block;margin-left: 5%;}
+.msg_pay .pay_ipt li #psd {border: 1px solid #95989A;width: 86%;padding: 0.5rem 1rem;display: inline-block;margin-left: 5%;}
+
+/* 支付页 */
+.submit {width: 85%;display: block;margin: 1rem auto;height: 2.25rem;text-align: center;line-height: 2.25rem;background-color: #EEC677;font-size: 0.75rem;color: #fff;}
+.msg_pay .pay_ipt li #auth_code {border: 1px solid #95989A;width: 40%;padding: 0.5rem 1rem;display: inline-block;margin-left: 5%;}
+.msg_pay .pay_ipt li a.auth_img {display: inline-block;width: 30%;height: 2.5rem;border: 1px solid #95989A;float: right;}
+.msg_pay .pay_ipt li a.auth_img img {display: block;width: 100%;height: 100%;}
+.msg_pay .pay_ipt li i.change {float: right;height: 2.5rem;line-height: 2.5rem;font-size: 0.7rem;}
+
+/* 支付成功 */
+.success_img {padding: 1.5rem 0;border-top: 1px solid #ccc;}
+.success_img p {display: block;width: 100%;text-align: center;font-size: 1.25rem;font-weight: 600;}
+.success_img img {width: 50%;display: block;margin: 1rem auto;}

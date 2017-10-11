@@ -1,0 +1,26 @@
+.panel_table{border: 1px solid #E8E8E8; margin: 34px auto 21px;}
+.panel_table .th{background: #F5F5F5; padding:10px 0 10px 20px; font-size: 14px; color: #646464; border-bottom: 1px solid #E8E8E8}
+.panel_table .th i{background: url(/image/PC/icon_l.png) no-repeat; display: inline-block; width: 36px; height: 36px; margin-right: 20px; vertical-align: middle;}
+.panel_table .ul_item li{padding: 14px 20px; font-size: 14px;color: #646464;border-bottom: 1px solid #E8E8E8 }
+.panel_table .ul_item li:last-child{border-bottom: 0;}
+.panel_table .ul_item li .money{font-size: 30px; color: #EEC677; vertical-align: middle;}
+
+.box_bg{background: #F5F5F5; padding:24px 0;}
+.box_bg h3,.mt_v h3{font-size: 30px; color: #000;}
+.div_items{margin-bottom: 25px;}
+.div_items .w100{width: 100px; display: inline-block; font-size: 16px;}
+.div_items .cards_names{font-size: 16px;}
+.search_results{width: 97px; height: 26px; line-height: 26px; text-align: center; background: #fff; border: 1px solid #95989A; border-radius: 5px; font-size: 12px; color: #000; text-decoration: none; display: inline-block; margin-left: 31px;}
+.div_items .cards_num,.div_items .pay_password,.div_items .x_codes{background: #fff; line-height: 12px; height: 12px; padding:10px 0; text-indent: 8px;}
+.div_items .w375{width: 375px;}
+.div_items .w169{width: 169px;}
+.od{border-bottom: 1px solid #D8D8D8; padding-bottom: 10px;}
+.align{width: 100%; text-align: center; margin-top: 27px;}
+.submit_btns{background:#eec677; outline: none; display: inline-block; text-decoration: none; color: #fff; cursor: pointer; height: 46px; line-height: 46px; text-align: center; font-size: 16px; font-family: '微软雅黑'; border: 1px solid #C29337; border-radius: 5px; width: 145px; margin:0 auto;}
+.submit_btns:hover{background: #F5CE81}
+
+.mt_v{margin-top: 40px;}
+
+
+.div_align{text-align: center;}
+.div_align img{margin-bottom: 38px;}

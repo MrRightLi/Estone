@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+@include('Admin.partials._head')
+</head>
+
+<body>
+	@include('Admin.partials._nav')
+
+	<div class="container">
+
+	</div>
+</body>
+
+</html>

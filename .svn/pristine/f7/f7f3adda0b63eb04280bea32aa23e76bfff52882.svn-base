@@ -1,0 +1,467 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\YTAPIHelper;
+use App\Merchant;
+use App\Notify;
+use App\Refound;
+use App\Transaction;
+use App\TransactionLog;
+use Illuminate\Http\Request;
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
+
+class YTController extends Controller
+{
+    protected $api_helper;
+    protected $http_client;
+    protected $transaction;
+    protected $transaction_log;
+    protected $merchant;
+    protected $refound;
+    protected $notify;
+
+    public function __construct()
+    {
+        $this->api_helper = new YTAPIHelper();
+        $this->http_client = new \GuzzleHttp\Client();
+
+        $this->transaction = new Transaction();
+        $this->transaction_log = new TransactionLog();
+        $this->merchant = new Merchant();
+        $this->refound = new Refound();
+        $this->notify = new Notify();
+    }
+
+    /** 验证商户
+     * @param $merchant_id
+     * @return string
+     */
+    public function checkMerchant($merchant_id)
+    {
+        \Log::info('queryBalance-input', ['merchant_id' => $merchant_id]);
+        if (empty($merchant_id))
+            return $this->api_helper->ajaxReturnError('无此商户');
+
+        // 验证商户
+        $merchant_info = $this->queryMerchantInfo($merchant_id);
+        if (empty($merchant_info)) {
+            return $this->api_helper->ajaxReturnError('无此商户');
+        } else {
+            return $this->api_helper->ajaxReturnSuccess($merchant_info);
+        }
+    }
+
+    /** 余额查询
+     * @param Request $request
+     * @return mixed
+     */
+    public function queryBalance(Request $request)
+    {   // 1589580299000460292
+        $input = $request->all();
+        \Log::info('queryBalance-input', $input);
+
+        if (!isset($input['password'])) {
+            exit($this->api_helper->ajaxReturnError('密码缺失'));
+        }
+        $card_num = $input['card_num'];
+        $password = $input['password'];
+
+        // 验证签名
+
+        // 获取密文密码
+        $encrypt_card_JSON = $this->api_helper->requestEncryptPassword($card_num, $password);
+        $encrypt_card = json_decode($encrypt_card_JSON, true);
+        if ($encrypt_card['status'] !== 'success')
+            exit($this->api_helper->ajaxReturnError('密码加密失败'));
+        $card_num = $encrypt_card['data']['pan']; // 卡号
+        $password = $encrypt_card['data']['pinData']; // 密文密码
+
+        // 验证密码
+        $result_json = $this->api_helper->verifyPassword($card_num, $password);
+        $result = json_decode($result_json, true);
+        if ($result['status'] !== 'success')
+            exit($this->api_helper->ajaxReturnError('账号或密码错误'));
+
+        $card_info = $this->api_helper->cardInfoQuery($card_num);
+        \Log::info('queryBalance--result', json_decode($card_info, true));
+
+        return $card_info;
+    }
+
+    /** 发起交易
+     * @param Request $request
+     * @return string
+     */
+    public function transationBuild(Request $request)
+    {
+        $input = $request->all();
+        \Log::info('transationBuild-input', $input);
+
+        // 验签
+        $sign = isset($input['sign']) ? trim($input['sign'] ) : '';
+        $merchant_id = isset($input['merchant_id']) ? trim($input['merchant_id']) : '';
+        $terminal_id = isset($input['terminal_id']) ? trim($input['terminal_id']) : '';
+        $return_url = isset($input['return_url']) ? trim($input['return_url']) : '';
+        $notify_url = isset($input['notify_url']) ? trim($input['notify_url']) : '';
+        $order_time = isset($input['order_time']) ? trim($input['order_time']) : '';
+        $amount = isset($input['amount']) ? trim($input['amount']) : '';
+        $order_id = isset($input['order_id']) ? trim($input['order_id']) : '';
+        $ip = isset($input['ip']) ? trim($input['ip']) : '';
+        $param = array(
+            'order_id' => $order_id,
+            'amount' => $amount,
+            'order_time' => $order_time,
+            'merchant_id' => $merchant_id,
+            'terminal_id' => $terminal_id,
+            'return_url' => $return_url,
+            'notify_url' => $notify_url,
+        ) ;
+
+        $sign_result = $this->checkSign($param, $sign);
+        if (!$sign_result)
+            return $this->api_helper->ajaxReturnError('签名失败');
+
+        $remark = isset($input['remark']) ? $input['remark'] : '';
+
+        // 交易是否存在
+        // $transaction_param = array(); //  交易参数(请求支付参数)
+        $transaction = $this->transaction->transactionByOrderId($order_id);
+
+        if (!empty($transaction)) { // 交易存在
+            // 交易已经成功
+            if ($transaction['transaction_status'] == Transaction::STATUS_SUCCESS) {
+                return $this->api_helper->ajaxReturnError('重复交易');
+            } else {
+                return $this->api_helper->ajaxReturnSuccess($transaction);
+            }
+        } else {// 交易不存在
+            // 生成交易记录
+            $param = array(
+                'order_id' => $order_id,
+                'amount' => $amount,
+                'merchant_id' => $merchant_id,
+                'terminal_id' => $terminal_id,
+                'remark' => $remark,
+                'return_url' => $return_url,
+                'notify_url' => $notify_url,
+                'order_time' => $order_time,
+                'device' => isset($input['device']) ? strtoupper(trim($input['device'])) : '',
+                'ip' => $ip
+            );
+            $transaction = $this->transaction->transationBuild($param);
+            return $this->api_helper->ajaxReturnSuccess($transaction);
+        }
+
+    }
+
+    /** 交易信息查询
+     * @param Request $request
+     * @return string
+     */
+    public function queryTransactionInfo(Request $request) {
+        $input = $request->all();
+
+        if (!isset($input['transaction_no']))
+            $this->api_helper->ajaxReturnError('交易号不能为空');
+        $transaction_no = isset($input['transaction_no']) ? trim($input['transaction_no']) : '';
+        if (empty($transaction_no))
+            return $this->api_helper->ajaxReturnError('交易不存在');
+
+        $transaction = $this->transaction->transactionByTransactionNO($transaction_no);
+        if (empty($transaction))
+            return $this->api_helper->ajaxReturnError('交易不存在');
+
+        $merchant_info = $this->queryMerchantInfo($transaction['merchant_id']);
+        $transaction['merchant_name'] = $merchant_info['merchant_name'];
+        if (!empty($transaction)) {
+            return $this->api_helper->ajaxReturnSuccess($transaction);
+        } else {
+            return $this->api_helper->ajaxReturnError('交易不存在');
+        }
+    }
+
+    /** 在线交易
+     * @param Request $request
+     * @return string
+     */
+    public function merchantPay(Request $request)
+    {
+        $input = $request->all();
+        \Log::info('merchantPay-input', ['merchantPay-input' => $input]);
+
+        $sign = isset($input['sign']) ? trim($input['sign'] ) : '';
+        $transaction_no = isset($input['transaction_no']) ? trim($input['transaction_no']) : '';
+        if (empty($sign) || empty($transaction_no))
+            $this->api_helper->ajaxReturnError('验证失败');
+
+        $transaction = $this->transaction->transactionByTransactionNO($transaction_no);
+        if (empty($transaction))
+            return $this->api_helper->ajaxReturnError('交易不存在');
+
+        if ($transaction['transaction_status'] == Transaction::STATUS_SUCCESS)
+            return $this->api_helper->ajaxReturnError('重复交易');
+
+        $merchant_id = $transaction['merchant_id'];
+        $order_id = $transaction['order_id'];
+        $param = array($merchant_id, $order_id);
+        $sign_result = $this->api_helper->checkSign($sign, $param);
+        if (!$sign_result)
+            return $this->api_helper->ajaxReturnError('签名失败');
+
+        // 简单验证密码
+        $card_num = isset($input['card_num']) ? trim($input['card_num'] ) : '';
+        $password = isset($input['password']) ? trim($input['password'] ) : '';
+
+        if (!isset($card_num) || !isset($password)) {
+            exit($this->api_helper->ajaxReturnError('账号或密码缺失'));
+        } else {
+            // 获取密文密码
+            $encrypt_card_JSON = $this->api_helper->requestEncryptPassword($card_num, $password);
+            $encrypt_card = json_decode($encrypt_card_JSON, true);
+            if ($encrypt_card['status'] !== 'success')
+                exit($this->api_helper->ajaxReturnError('密码加密失败'));
+            $card_num = $encrypt_card['data']['pan']; // 卡号
+            $password = $encrypt_card['data']['pinData']; // 密文密码
+
+            // 验证密码
+            $result_json = $this->api_helper->verifyPassword($card_num, $password);
+            $result = json_decode($result_json, true);
+            if ($result['status'] !== 'success')
+                exit($this->api_helper->ajaxReturnError('账号或密码错误'));
+        }
+
+        // 进行易通在线交易
+        $amount = $transaction['amount'];
+        $mid = $transaction['merchant_id'];
+        $tid = $transaction['terminal_id'];
+        $order_id = $transaction['order_id'];
+        $pay_result = $this->api_helper->payOrder($card_num, $password, $amount, $mid, $tid, $order_id);
+
+        // 生成交易日志
+        $transation_id = $transaction['id'];
+        $build_transationLog_id = $this->transaction_log->buildTransationLog($transation_id,$card_num, $pay_result);
+
+        // 交易结果处理
+        if ($pay_result->rc == '00') {
+            // 交易成功后台通知
+            if ($build_transationLog_id) {
+                $this->transaction->updateTransactionStatus($transation_id, Transaction::STATUS_SUCCESS);
+            }
+
+            // 查询交易状态
+            $transation_status = $this->transaction->transactionStatusQuery($transation_id);
+
+            // 通知商城后台支付结果
+            // 创建通知记录
+            $notify_id = $this->notify->createNotify(['transaction_id' => $transation_id]);
+            // 进行后台支付结果通知
+            $transaction_notify_result =  $this->transactionNotity($transation_status);
+            $notify_result = json_decode($transaction_notify_result, true);
+
+            // 进行后台支付结果通知
+            if ($notify_result['status'] == 'success') {
+                $this->notify->updateNotify(['notify_id' => $notify_id,'notify_status'=>Notify::NOTIFY_STATUS_SUCCESS, 'msg' => json_encode($notify_result)]);
+            } else {
+                $msg = isset($notify_result['msg']) ? $notify_result['msg'] : '';
+                $this->notify->updateNotify(['notify_id' => $notify_id, 'notify_status'=>Notify::NOTIFY_STATUS_ERROR, 'msg' => $msg]);
+            }
+
+            // 交易成功前台通知
+            if ($transation_status['transaction_status'] == Transaction::STATUS_SUCCESS) {
+                // 交易成功
+                $return = array(
+                    'transation_id' => $transation_id,
+                    'order_id' => $pay_result->voucher,
+                    'amount' => $pay_result->trAmt * 100
+                );
+                return $this->api_helper->ajaxReturnSuccess($return);
+            } else {
+                return $this->api_helper->ajaxReturnError('交易状态有误');
+            }
+        } else {
+            // 交易失败前台通知
+            $this->transaction->updateTransactionStatus($transation_id, Transaction::STATUS_FAIL);
+            $msg = isset($pay_result->rcDetail) ? $pay_result->rcDetail : '支付失败';
+
+            return $this->api_helper->ajaxReturnError($msg);
+        }
+    }
+
+    /** 退款
+     * @param Request $request
+     * @return string
+     */
+    public function refound(Request $request) {
+        $input = $request->all();
+        $client_ip = $this->getIp();
+        \Log::info('refound-input', ['refound-input' => $input, 'ip' => $client_ip]);
+        // 查询支付信息
+        $transaction_no = isset($input['transaction_no']) ? $input['transaction_no'] : '';
+        if (empty($transaction_no))
+            return $this->api_helper->ajaxReturnError('交易号不存在');
+
+        $pay_info = $this->transaction->queryTransactionPayInfo($transaction_no);
+        if (!$pay_info)
+            return $this->api_helper->ajaxReturnError('交易不存在');
+
+        // 进行退款
+        $card_num = $pay_info->card_num;
+        $trAmt = $pay_info->amount;
+        $mid = $pay_info->merchant_id;
+        $tid = $pay_info->terminal_id;
+        $rrn = $pay_info->rrn;
+
+        $merchant_info = $this->merchant->queryMerchantInfo($mid);
+        \Log::info('merchant_info',$merchant_info);
+
+        if ($merchant_info) {
+            $merchant_ips = array();
+            foreach ($merchant_info as $sub_merchant_info) {
+                array_push($merchant_ips, $sub_merchant_info['ip']);
+            }
+
+            \Log::info('merchant_ips',$merchant_ips);
+            if (in_array($client_ip, $merchant_ips)) {
+                return $this->api_helper->ajaxReturnError('非法 ip 地址');
+            }
+        } else {
+            return $this->api_helper->ajaxReturnError('非法商户');
+        }
+
+        // 进行退款
+        $result = $this->api_helper->refound($card_num, $trAmt, $mid, $tid, $rrn);
+
+        // 生成退款日志
+        $param = array(
+            'transaction_no' => $transaction_no,
+            'card_no' => isset($result->pan) ? $result->pan : '',
+            'amount' => isset($result->trAmt) ? $result->trAmt : '',
+            'merchant_id' => isset($result->mid) ? $result->mid : '',
+            'terminal_id' => isset($result->tid) ? $result->tid : '',
+            'rrn' => isset($rrn) ? $rrn : '',
+            'txnDate' => isset($result->txnDate) ? trim($result->txnDate) : '',
+            'txnTime' => isset($result->txnTime) ? trim($result->txnTime) : '',
+            'return_code' => isset($result->rc) ? trim($result->rc) : '',
+            'rcDetail' => isset($result->rcDetail) ? trim($result->rcDetail) : '',
+            'return_message' => json_encode($result)
+        );
+        $this->refound->createRefound($param);
+
+        if ($result->rc == '00') {
+            return $this->api_helper->ajaxReturnSuccess(array());
+        } else {
+            return $this->api_helper->ajaxReturnError('退款失败');
+        }
+    }
+
+    #program mark -- private methods
+    private function checkSign($param,$sign) {
+        $merchant_id = isset($param['merchant_id']) ? trim($param['merchant_id']) : '';
+        if (empty($merchant_id))
+            return false;
+        $merchant_info = $this->queryMerchantInfo($merchant_id);
+        if (empty($merchant_info))
+            return false;
+        $merchant_security_key = isset($merchant_info['security_key']) ? $merchant_info['security_key'] : '';
+
+        $order_id = $param['order_id'];
+        $amount = $param['amount'];
+        $order_time = $param['order_time'];
+        $merchant_id = $param['merchant_id'];
+        $terminal_id = $param['terminal_id'];
+        $return_url = $param['return_url'];
+        $notify_url = $param['notify_url'];
+
+        $sign_string_local = $order_id.$amount.$order_time.$merchant_id.$terminal_id.$return_url.$notify_url.$merchant_security_key;
+        if ($sign === md5($sign_string_local)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function queryMerchantInfo($merchant_id) {
+        \Log::info('queryMerchantInfo', ['merchant_id' => $merchant_id]);
+        $merchant_info = $this->merchant->queryMerchantInfo($merchant_id);
+        if (!empty($merchant_info)) {
+            return $merchant_info[0];
+        } else {
+            return array();
+        }
+    }
+
+    /** 交易状态后台通知
+     * @param $transaction_status
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    private function transactionNotity($transaction_status) {
+        \Log::info('transactionNotity',['input' => $transaction_status]);
+        $body = array(
+            'transaction_no' => $transaction_status['transaction_no'],
+            'status' => $transaction_status['transaction_status'],
+            'order_id' => $transaction_status['order_id'],
+            'amount' => $transaction_status['amount'],
+            'updated_at' => $transaction_status['updated_at']
+        );
+        $notify_url = $transaction_status['notify_url'];
+        try {
+            $post_response = $this->http_client->request('POST', $notify_url, ['form_params' => $body]);
+            $code = $post_response->getStatusCode();
+            if ($code !== 200) {
+                \Log::info('transactionNotity',['post_response-code' => $post_response, 'code' => $code]);
+                return $this->api_helper->ajaxReturnError($code);
+            }
+
+            $post_response = json_decode($post_response->getBody(), TRUE);
+            if ($post_response) {
+                \Log::info('transactionNotity',['ResponseInterfaceCode-success' => $post_response]);
+                if ($post_response['status'] == 'success') {
+                    $msg = isset($post_response['data']) ? $post_response['data'] : '';
+                    return $this->api_helper->ajaxReturnSuccess($msg);
+                } else {
+                    $msg = isset($post_response['msg']) ? $post_response['msg'] : '';
+                    return $this->api_helper->ajaxReturnError($msg);
+                }
+            } else {
+                return $this->api_helper->ajaxReturnError('通知失败');
+            }
+        } catch (\Exception $e) {
+            return $this->api_helper->ajaxReturnError($e->getMessage());
+        }
+    }
+
+    /**
+     * 异常订单信息
+     */
+    public function exceptiveOrderInfo() {
+        \Log::info('exceptiveOrderInfo');
+        $exceptive_order_list = $this->notify->exceptiveOrderInfo();
+        \Log::info('exceptiveOrderInfo',['exceptive_order_list' => $exceptive_order_list]);
+        if (!empty($exceptive_order_list)) {
+            foreach ($exceptive_order_list as $exceptive_order) {
+                // \Log::info('exceptiveOrderInfo',['exceptive_order' => $exceptive_order]);
+                $transaction_id = $exceptive_order['transaction_id'];
+                $transaction_info =$this->transaction->transactionBytransactionId($transaction_id);
+                if (!$transaction_info) {
+                    \Log::info('exceptiveOrderInfo',['$transaction_info' => '交易不存在']);
+                    continue ;
+                }
+
+                // 进行后台支付结果通知
+                $transaction_notify_result =  $this->transactionNotity($transaction_info);
+                $notify_result = json_decode($transaction_notify_result, true);
+
+                $notify_id = $exceptive_order['id'];
+                if ($notify_result['status'] == 'success') {
+                    // 进行后台支付结果通知
+                    $this->notify->updateNotify(['notify_id' => $notify_id,'notify_status'=>Notify::NOTIFY_STATUS_SUCCESS]);
+                } else {
+                    $msg = isset($notify_result['msg']) ? $notify_result['msg'] : '';
+                    $this->notify->updateNotify(['notify_id' => $notify_id, 'notify_status'=>Notify::NOTIFY_STATUS_ERROR, 'msg' => $msg]);
+                }
+            }
+        }
+    }
+}

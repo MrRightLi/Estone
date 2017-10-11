@@ -1,0 +1,139 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\YTAPIHelper;
+use App\Notify;
+use App\Transaction;
+use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\URL;
+use League\Flysystem\Config;
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
+
+class YTTestController extends Controller
+{
+    protected $api_helper;
+    protected $http_client;
+    protected $transaction;
+    protected $notify;
+
+
+    public function __construct()
+    {
+        $this->api_helper = new YTAPIHelper();
+        $this->http_client = new \GuzzleHttp\Client();
+        $this->transaction = new Transaction();
+        $this->notify = new Notify();
+    }
+
+    public function YTTest() {
+        echo md5('898610173210046' . '20170607000000000014');
+    }
+
+    public function transNotify(Request $request)
+    {
+        //
+        $input = $request->all();
+        \Log::info('transNotify',['YTTest-Input' => $input]);
+
+        return $this->api_helper->ajaxReturnSuccess($input);
+    }
+
+    public function sendAsyncRequest() {
+        /*
+        $notify_url = 'http://api.test.yufu365.com/adminmall/activity/payNotification';
+        // http://api.test.yufu365.com/adminmall/activity/payNotification
+        $body = array(
+            'a' => 11,
+            'b' => 12
+        );
+
+        $client = new \GuzzleHttp\Client();
+        $data = $client->request('POST', $notify_url, ['form_params' => $body]);
+        if (!$data) {
+            $msg = '通知地址有误';
+            return $this->api_helper->ajaxReturnError($msg);
+        }
+
+        $response = json_decode($data->getBody(), true);
+        \Log::info('transactionNotity',['response' => $response]);
+        return $this->api_helper->ajaxReturnSuccess($response);
+
+        exit;
+        */
+
+        $notify_url = 'http://estone.local.com/YTTest/transNotify';
+        $body = array(
+            'a' => 11,
+            'b' => 12
+        );
+
+        $client = new \GuzzleHttp\Client();
+        // $request = new \GuzzleHttp\Psr7\Request('POST', $notify_url, ['form_params' => $body]);
+        $promise = $client->requestAsync('POST', $notify_url, ['form_params' => $body]);
+        $promise->then(
+            function (ResponseInterface $resonse) {
+                $code = $resonse->getStatusCode();
+                $data = json_decode($resonse->getBody(), true);
+
+                if ($code == 200) {
+                    echo 'success';
+                } else {
+                    return 'error';
+                }
+            },
+            function (RequestException $e) {
+                echo $e->getMessage() . "\n";
+                echo $e->getRequest()->getMethod();
+            }
+        );
+        $promise->wait();
+    }
+
+    public function GuzzleHttpClient() {
+//        $res = $client->request('GET', 'http://estone.local.com/YTTest/index');
+//
+//        echo $res->getStatusCode();
+//        // "200"
+//        // 'application/json; charset=utf8'
+//        echo $res->getBody();
+        // {"type":"User"...'
+
+
+        $body = ['a' => '11', 'b' => '212'];
+        $notify_url = 'http://estone.local.com/YTTest/transNotify';
+        try {
+            $post_response = $this->http_client->request('POST', $notify_url, ['form_params' => $body]);
+            $code = $post_response->getStatusCode();
+            if ($code !== 200) {
+                \Log::info('transactionNotity',['post_response-code' => $post_response, 'code' => $code]);
+                return $this->api_helper->ajaxReturnError($code);
+            } else {
+                return $this->api_helper->ajaxReturnSuccess($post_response->getBody());
+            }
+        } catch (\Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+
+        exit;
+
+        try {
+            // 发送一个异步请求
+            $request = new \GuzzleHttp\Psr7\Request('GET', 'http://estone.local.com/YTTest/index',['http_errors' => false]);
+            $promise = $client->sendAsync($request)->then(function ($response) {
+                echo $response->getStatusCode();
+                echo "<br>";
+
+                echo 'I completed! ' . $response->getBody();
+            });
+            $promise->wait();
+        } catch (\Exception $e) {
+//            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 111;
+        };
+    }
+
+}

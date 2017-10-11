@@ -1,0 +1,847 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/common/css/admin.css" rel="stylesheet" type="text/css" />
+<link href="css/common/css/pintuer.css" rel="stylesheet" type="text/css" />
+</head>
+  <style>
+        body,html{overflow: hidden;}
+    </style>
+<body>
+
+
+<div class="dux-tools">
+    <div class="bread-head">订单管理</div>
+    <br>
+    <div class="tools-function clearfix">
+        <div class="float-left">
+            <a class="button button-small bg-main icon-list" href="/index.php/Admin/Order/index.html"> <i class="iconfont"></i>
+                订单列表
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="table-responsive">
+<table id="table" class="table table-hover ">
+    <tbody>
+        <tr>
+            <th width="*">
+                <input type="checkbox">全选</th>
+            <th width="*">用户名</th>
+            <th width="*">订单号</th>
+            <th width="*">下单时间</th>
+            <th width="*">来源</th>
+            <th width="*">收货人</th>
+            <th width="*">订单总金额</th>
+            <th width="*">实付金额</th>
+            <th width="*">订单类型</th>
+            <th width="*">支付状态</th>
+            <th width="*">延迟</th>
+            <th width="*">Niu</th>
+            <th width="*">订单状态</th>
+            <th width="*">操作</th>
+        </tr>
+
+        <tr>
+                <td>
+                    <input type="checkbox" value="97842"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/914.html">15506884924</a>
+                </td>
+                <td>20170811141315588307</td>
+                <td>2017-08-11 14:13:15</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>test</td>
+                <td>0.01</td>
+                <td>0.00</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                    <span class="tag bg-red">未支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            未完成
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97842.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97840"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/10907.html">13273058576</a>
+                </td>
+                <td>20170811140541521803</td>
+                <td>2017-08-11 14:05:41</td>
+                <td>
+									</td>
+                <td>关秀芬</td>
+                <td>169.00</td>
+                <td>0.00</td>
+                <td>
+                                             APP
+						                </td>
+                <td>
+                    <span class="tag bg-red">未支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            未完成
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97840.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97838"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/9090.html">18607159828</a>
+                </td>
+                <td>20170811140444705392</td>
+                <td>2017-08-11 14:04:44</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>李女士</td>
+                <td>101.20</td>
+                <td>100.32</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97838.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97836"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/14808.html">13372088273</a>
+                </td>
+                <td>20170811140440867717</td>
+                <td>2017-08-11 14:04:40</td>
+                <td>
+					                        复星商城
+                    				</td>
+                <td>侯胜刚</td>
+                <td>112.00</td>
+                <td>112.00</td>
+                <td>
+                                             H5
+                                        </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97836.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97834"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/6817.html">15120084867</a>
+                </td>
+                <td>20170811135759473184</td>
+                <td>2017-08-11 13:57:59</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>齐宝军</td>
+                <td>178.30</td>
+                <td>178.12</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97834.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97832"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/9172.html">18601048235</a>
+                </td>
+                <td>20170811135725109768</td>
+                <td>2017-08-11 13:57:25</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>罗晨曦</td>
+                <td>171.50</td>
+                <td>0.00</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                    <span class="tag bg-red">未支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            未完成
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97832.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97830"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/10907.html">13273058576</a>
+                </td>
+                <td>20170811135559480462</td>
+                <td>2017-08-11 13:55:59</td>
+                <td>
+									</td>
+                <td>关秀芬</td>
+                <td>361.20</td>
+                <td>360.42</td>
+                <td>
+                                             APP
+						                </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97830.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97828"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/15054.html">13472509834</a>
+                </td>
+                <td>20170811135410624191</td>
+                <td>2017-08-11 13:54:10</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>周女士</td>
+                <td>363.10</td>
+                <td>360.92</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97828.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97825"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/15068.html">15821809508</a>
+                </td>
+                <td>20170811135106823416</td>
+                <td>2017-08-11 13:51:06</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>周勇</td>
+                <td>499.88</td>
+                <td>497.90</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97825.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97823"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/11545.html">17862908657</a>
+                </td>
+                <td>20170811134606442583</td>
+                <td>2017-08-11 13:46:06</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>刘晨曦</td>
+                <td>132.20</td>
+                <td>131.62</td>
+                <td>
+                                             H5
+                                        </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97823.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97821"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/15067.html">18999524555</a>
+                </td>
+                <td>20170811134335375646</td>
+                <td>2017-08-11 13:43:35</td>
+                <td>
+									</td>
+                <td>何鹏亮</td>
+                <td>499.00</td>
+                <td>496.32</td>
+                <td>
+                                             APP
+						                </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97821.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97819"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/6817.html">15120084867</a>
+                </td>
+                <td>20170811134255930520</td>
+                <td>2017-08-11 13:42:55</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>齐宝军</td>
+                <td>289.00</td>
+                <td>286.72</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97819.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97817"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/15065.html">13701190848</a>
+                </td>
+                <td>20170811133930599950</td>
+                <td>2017-08-11 13:39:30</td>
+                <td>
+									</td>
+                <td>詹朝军</td>
+                <td>13.90</td>
+                <td>0.00</td>
+                <td>
+                                             APP
+						                </td>
+                <td>
+                    <span class="tag bg-red">未支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            未完成
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97817.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97815"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/10531.html">18609900049</a>
+                </td>
+                <td>20170811133725461172</td>
+                <td>2017-08-11 13:37:25</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>郭亚敏</td>
+                <td>499.00</td>
+                <td>0.00</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                    <span class="tag bg-red">未支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            未完成
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97815.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97813"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/15065.html">13701190848</a>
+                </td>
+                <td>20170811133150758784</td>
+                <td>2017-08-11 13:31:50</td>
+                <td>
+					baidu.com                    				</td>
+                <td>詹朝军</td>
+                <td>13.90</td>
+                <td>0.00</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                    <span class="tag bg-red">未支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    已取消
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97813.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97811"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/15065.html">13701190848</a>
+                </td>
+                <td>20170811132227274500</td>
+                <td>2017-08-11 13:22:27</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>詹朝军</td>
+                <td>13.90</td>
+                <td>0.00</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                    <span class="tag bg-red">未支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    已取消
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97811.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97809"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/11545.html">17862908657</a>
+                </td>
+                <td>20170811130832588644</td>
+                <td>2017-08-11 13:08:32</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>刘晨曦</td>
+                <td>215.40</td>
+                <td>0.00</td>
+                <td>
+                                             H5
+                                        </td>
+                <td>
+                    <span class="tag bg-red">未支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    已取消
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97809.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97807"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/15033.html">15001089181</a>
+                </td>
+                <td>20170811130804683835</td>
+                <td>2017-08-11 13:08:04</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>孙女士</td>
+                <td>169.00</td>
+                <td>166.92</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97807.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97805"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/10531.html">18609900049</a>
+                </td>
+                <td>20170811130724403709</td>
+                <td>2017-08-11 13:07:24</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>郭亚敏</td>
+                <td>499.00</td>
+                <td>0.00</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                    <span class="tag bg-red">未支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            未完成
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97805.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr><tr>
+                <td>
+                    <input type="checkbox" value="97803"></td>
+                <td>
+                    <a href="/index.php/Admin/User/getDetail/id/11188.html">18682121283</a>
+                </td>
+                <td>20170811130546773644</td>
+                <td>2017-08-11 13:05:46</td>
+                <td>
+					yufu365.com                    				</td>
+                <td>李鹏博</td>
+                <td>155.00</td>
+                <td>154.42</td>
+                <td>
+                     PC端
+                                        </td>
+                <td>
+                                            <span class="tag bg-green">已支付</span>
+                                        </td>
+
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                    <span class="tag bg-green">正常</span>
+                                        </td>
+                <td>
+                                            备货中
+                                        </td>
+
+                <td>
+
+                    <a class="button bg-blue button-small icon-pencil" href="/index.php/Admin/Order/detail/id/97803.html"> <i class="iconfont"></i>
+                    </a>
+                    <!--<a class="hl_del button bg-red button-small icon-trash-o " href="javascript:void(0);" url="/index.php/Admin/Help/delete.html">
+                    <i class="iconfont">&#xe60d;</i>
+                </a>
+                -->
+            </td>
+        </tr>
+</tbody>
+</table>
+</div>
+
+<div class="panel-foot table-foot clearfix">
+    <div class="float-left">
+        总计：46987条
+    </div>
+<div class="float-right">
+<ul class="hl_page"><div>  <span class="current">1</span><a class="num" href="/index.php/Admin/Order/index/p/2.html">2</a><a class="num" href="/index.php/Admin/Order/index/p/3.html">3</a><a class="num" href="/index.php/Admin/Order/index/p/4.html">4</a><a class="num" href="/index.php/Admin/Order/index/p/5.html">5</a><a class="num" href="/index.php/Admin/Order/index/p/6.html">6</a><a class="num" href="/index.php/Admin/Order/index/p/7.html">7</a><a class="num" href="/index.php/Admin/Order/index/p/8.html">8</a><a class="num" href="/index.php/Admin/Order/index/p/9.html">9</a><a class="num" href="/index.php/Admin/Order/index/p/10.html">10</a><a class="num" href="/index.php/Admin/Order/index/p/11.html">11</a> <a class="next" href="/index.php/Admin/Order/index/p/2.html">下一页</a> <a class="end" href="/index.php/Admin/Order/index/p/2350.html">2350</a></div></ul>
+</div>
+</div>
+
+
+
+</body>
+</html>
