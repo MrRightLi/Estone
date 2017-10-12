@@ -2,7 +2,6 @@
 <html lang="zh-CN">
 <head>
     @include('Admin.partials._headerbase')
-    @yield('stylesheets')
 </head>
 
 <body>

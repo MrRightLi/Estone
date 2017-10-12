@@ -38,6 +38,7 @@ class YTMerchantController extends Controller
     {
         $merchant_detail = $this->merchant->merchantDetail($id);
 
+        return view('admin.merchant.merchant_add')->withMerchantDetail($merchant_detail);
     }
 
     /**
