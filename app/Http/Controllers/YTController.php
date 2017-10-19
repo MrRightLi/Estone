@@ -24,7 +24,7 @@ class YTController extends Controller
 
     public function __construct()
     {
-        // $this->api_helper = new YTAPIHelper();
+        $this->api_helper = new YTAPIHelper();
         $this->http_client = new \GuzzleHttp\Client();
 
         $this->transaction = new Transaction();
@@ -99,16 +99,23 @@ class YTController extends Controller
         $input = $request->all();
         \Log::info('transationBuild-input', $input);
 
-        // 验签
-        $sign = isset($input['sign']) ? trim($input['sign'] ) : '';
+        // ip 白名单验证
+        $ip = isset($input['ip']) ? trim($input['ip']) : '';
+        if (empty($ip))
+            return $this->api_helper->ajaxReturnError('商户 ip 地址不可用');
         $merchant_id = isset($input['merchant_id']) ? trim($input['merchant_id']) : '';
         $terminal_id = isset($input['terminal_id']) ? trim($input['terminal_id']) : '';
+        $ip_check_result = $this->checkMerchantIP($ip, $merchant_id, $terminal_id);
+        if (!$ip_check_result)
+            return $this->api_helper->ajaxReturnError('商户 ip 地址不可用');
+
+        // 验签
+        $sign = isset($input['sign']) ? trim($input['sign'] ) : '';
         $return_url = isset($input['return_url']) ? trim($input['return_url']) : '';
         $notify_url = isset($input['notify_url']) ? trim($input['notify_url']) : '';
         $order_time = isset($input['order_time']) ? trim($input['order_time']) : '';
         $amount = isset($input['amount']) ? trim($input['amount']) : '';
         $order_id = isset($input['order_id']) ? trim($input['order_id']) : '';
-        $ip = isset($input['ip']) ? trim($input['ip']) : '';
         $param = array(
             'order_id' => $order_id,
             'amount' => $amount,
@@ -117,7 +124,7 @@ class YTController extends Controller
             'terminal_id' => $terminal_id,
             'return_url' => $return_url,
             'notify_url' => $notify_url,
-        ) ;
+        );
 
         $sign_result = $this->checkSign($param, $sign);
         if (!$sign_result)
@@ -153,7 +160,6 @@ class YTController extends Controller
             $transaction = $this->transaction->transationBuild($param);
             return $this->api_helper->ajaxReturnSuccess($transaction);
         }
-
     }
 
     /** 交易信息查询
@@ -417,6 +423,11 @@ class YTController extends Controller
         }
     }
 
+    /**
+     * 商户信息查询
+     * @param $merchant_id 商户号
+     * @return array
+     */
     private function queryMerchantInfo($merchant_id) {
         $merchant_info = $this->merchant->queryMerchantInfo($merchant_id);
         if (!empty($merchant_info)) {
@@ -424,6 +435,43 @@ class YTController extends Controller
         } else {
             return array();
         }
+    }
+
+    /**
+     * 商户信息查询
+     * @param $merchant_id 商户号
+     * @param $terminal_id 终端号
+     * @return array
+     */
+    private function queryMerchantInfoByMerhchtIdAndTermalId($merchant_id, $terminal_id) {
+        $merchant_info = $this->merchant->queryMerchantInfoByMerhchtIdAndTermalId($merchant_id, $terminal_id);
+        if (!empty($merchant_info)) {
+            return $merchant_info[0];
+        } else {
+            return array();
+        }
+    }
+
+    /**
+     * 商户 ip 白名单验证
+     * @param $ip
+     * @param $merchant_id
+     * @param $terminal_id
+     * @return array|mixed
+     */
+    public function checkMerchantIP($ip, $merchant_id, $terminal_id) {
+        $merchant_info = $this->queryMerchantInfoByMerhchtIdAndTermalId($merchant_id, $terminal_id);
+        if (!empty($merchant_info)) {
+            $ip_merchant = $merchant_info['ip'];
+            if (trim($ip) === trim($ip_merchant)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
     }
 
     /** 交易状态后台通知

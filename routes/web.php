@@ -21,7 +21,10 @@ Route::get('YTTest/GuzzleHttpClient', 'YTTestController@GuzzleHttpClient');
 Route::get('admin/index/{route?}', 'Admin\YTAdminController@index')->name('admin_entrance'); // 后台入口界面;
 Route::get('admin/headPage', 'Admin\YTAdminController@headPage');
 Route::get('admin/merchant/list', 'Admin\YTMerchantController@index');
-Route::get('admin/merchant/show/{id}', 'Admin\YTMerchantController@show');
+Route::get('admin/merchant/show/{id}', 'Admin\YTMerchantController@show')->name('merchant_detail');
+Route::post('admin/merchant/update/{id}', 'Admin\YTMerchantController@update');
+Route::get('admin/merchant/add', 'Admin\YTMerchantController@add');
+Route::post('admin/merchant/store', 'Admin\YTMerchantController@store');
 
 /** inner routes */
 // 前端

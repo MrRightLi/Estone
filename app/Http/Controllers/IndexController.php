@@ -129,7 +129,7 @@ class IndexController extends Controller {
 		$order_id = $request -> order_id;
         $merchant_id = $request -> merchant_id;
         $transaction_no = $request -> transaction_no;
-
+        $ip = $this->getIp();
         $request = array(
             'transaction_no' => $transaction_no,
             'merchant_id' => $merchant_id,
@@ -154,7 +154,9 @@ class IndexController extends Controller {
         	'transaction_no' => $transaction_no,
             'card_num' => $card_no,
         	'password' => $password,
-        	'sign' => $sign
+        	'sign' => $sign,
+            'ip' => $ip,
+            'device' => $device,
         );
 
         Log::info('trans submit output param#', $post_data);

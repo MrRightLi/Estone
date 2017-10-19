@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\YTAPIHelper;
 use App\Notify;
 use App\Transaction;
+use App\Merchant;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\URL;
@@ -16,20 +17,29 @@ class YTTestController extends Controller
 {
     protected $api_helper;
     protected $http_client;
+    protected $merchant;
     protected $transaction;
     protected $notify;
 
 
     public function __construct()
     {
-        // $this->api_helper = new YTAPIHelper();
+        $this->api_helper = new YTAPIHelper();
         $this->http_client = new \GuzzleHttp\Client();
+
+        $this->merchant = new Merchant();
         $this->transaction = new Transaction();
+
         $this->notify = new Notify();
     }
 
     public function index() {
-        echo md5('898610173210046' . '20170607000000000014');
+//        echo md5('898610173210046' . '20170607000000000014');
+        $merchant_info = $this->merchant->queryMerchantInfoByMerhchtIdAndTermalId('898610173210046', '00000001');
+        $merchant_info2 = $this->merchant->queryMerchantInfo('898610173210046');
+
+        echo "<pre>";
+        print_r($merchant_info);
     }
 
     public function transNotify(Request $request)

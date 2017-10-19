@@ -27,6 +27,26 @@ class Merchant extends Model
     }
 
     /**
+     * 查询商户信息
+     * @param $merchant_id
+     * @param $terminal_id
+     * @return array
+     */
+    public function queryMerchantInfoByMerhchtIdAndTermalId($merchant_id, $terminal_id)
+    {
+        \DB::enableQueryLog();
+        $merchant_info = $this->where([
+            ['merchant_id', '=', $merchant_id],
+            ['terminal_id', '=', $terminal_id],
+            ['status', '=', Merchant::MERCHANT_STATUS_ENABLE],
+            ['fire_date', '>', date('Y-m-d')]
+        ])->select('id', 'merchant_id', 'terminal_id', 'merchant_name', 'fire_date', 'security_key', 'status', 'ip')->get();
+        $log = \DB::getQueryLog();
+        \Log::info('queryMerchantInfo-sqllog', ['sqllog' => $log]);
+        return $merchant_info->toArray();
+    }
+
+    /**
      * 获取商户列表
      *
      * @param $page_size
@@ -48,6 +68,45 @@ class Merchant extends Model
         $id = isset($id) ? intval($id) : '';
         if ($id) {
             return $this->where('id', $id)->first();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 更新商户
+     *
+     * @param array $id
+     * @param array $data
+     * @return bool
+     */
+    public function updateMerchant($id, $data)
+    {
+        \Log::info(__FUNCTION__, ['data' => $data, 'id' => $id]);
+        $result = $this->where('id', $id)->update($data);
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 创建商户
+     *
+     * @param array $data
+     * @return bool
+     */
+    public function createMerchant($data)
+    {
+        \Log::info(__FUNCTION__, ['data' => $data]);
+        $data['security_key'] = md5($data['merchant_id'].strrev($data['merchant_id']));
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $id = $this->insertGetId($data);
+
+        if ($id) {
+            return $id;
         } else {
             return false;
         }

@@ -12,7 +12,7 @@
                     <i class="iconfont"></i>
                     商户列表
                 </a>
-                <a class="button button-small bg-main icon-list" href="{{ url("admin/merchant/list") }}">
+                <a class="button button-small bg-main icon-list" href="{{ url("admin/merchant/add") }}">
                     <i class="iconfont"></i>
                     添加商户
                 </a>

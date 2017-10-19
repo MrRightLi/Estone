@@ -9,7 +9,6 @@
 	@include('Admin.partials._topic')
 
 	<div class="container">
-		@include('Admin.partials._message')
 		@yield('content')
 		@include('Admin.partials._footer')
 	</div>
