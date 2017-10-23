@@ -10,6 +10,7 @@ class YTAdminController extends Controller
 {
     public function index($route = null)
     {
+//        return view('admin.login');
         if (empty($route)) {
             $route = url('admin/merchant/list');
         } else {

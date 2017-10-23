@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +17,12 @@ Route::get('YTTest/sendAsyncRequest', 'YTTestController@sendAsyncRequest');
 Route::get('YTTest/GuzzleHttpClient', 'YTTestController@GuzzleHttpClient');
 
 /** 后台路由 **/
+// Authentication Routes
+Auth::routes();
+
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('admin/index/{route?}', 'Admin\YTAdminController@index')->name('admin_entrance'); // 后台入口界面;
 Route::get('admin/headPage', 'Admin\YTAdminController@headPage');
 Route::get('admin/merchant/list', 'Admin\YTMerchantController@index');

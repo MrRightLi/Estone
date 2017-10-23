@@ -1,0 +1,32 @@
+body,input,i{margin:0; padding:0; border:0; outline: 0; font-style: normal;font-family:"Microsoft YaHei";}
+@font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/font_1461035659_7805436.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1461035659_7805436.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1461035659_7805436.woff') format('woff'), /* chrome��firefox */
+  url('//at.alicdn.com/t/font_1461035659_7805436.ttf') format('truetype'), /* chrome��firefox��opera��Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1461035659_7805436.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+/*iconfontͼ��*/
+
+.login_bj{background: url(../images/login_bj.jpg) no-repeat center center; width: 100%; height: 100%; position: absolute;}
+/*logo*/
+.log{padding-top: 60px;}
+.panel_logo{background: url(../images/login_logo.png) no-repeat; border-right: 2px solid #000; padding-right:20px; float: left; display: inline-block; width: 234px;height: 85px; background-size:234px 85px;}
+span.title{font-size: 60px; float: left; color: #000;  font-weight:bold;padding-top: 40px; padding-left: 20px;}
+
+/*content part*/
+#content{position: relative; width: 1200px; height: 100%; margin: 0 auto;}
+.fix_bj{position: absolute; bottom: 0px; right: 355px; background: url(../images/bgcolor.png) no-repeat; width: 875px; height: 1036px;}
+.panel_right{position: absolute; width: 446px; height: 100%; background: #f9f9f9; right: 0px; top: 0;}
+.main{position: absolute; top: 50%; margin-top: -159px;}
+.item{width: 446px; position: relative; height:67px;}
+.item .t_box{border-bottom: 1px solid #272536; width: 286px; background: none; position: absolute; left:50%; margin-left:-135px;  height: 28px; line-height: 28px;}
+.item .i_code{width: 146px; float: left;}
+img.fr{float: right; margin-right: 69px;margin-top:-21px;}
+.iconfont{position: absolute; left: 52px; top: 0px; font-size: 25px; color: #272636; display: inline-block;font-family: 'iconfont';}
+.eamil:before{content: "\e63e";}
+.password:before{content: "\e640";}
+.v_code:before{content: "\e642";}
+.login_btn{display: block; width: 336px; height: 54px; line-height: 54px; text-align: center; font-weight: bold; margin-top: 41px; font-size: 24px; background: #cc2340; position: absolute; left: 50%; margin-left: -168px; text-decoration:none; color: #fff;}
+.login_btn:hover{background: #d3334f;cursor: pointer;}
