@@ -7,7 +7,17 @@
 			<li class="active"><a href="javascript:;" data="260" url="" class=""> 起始页</a></li>
 		</ul>
 		<ul class="nav nav-navicon nav-menu nav-inline admin-nav nav-tool">
-			<li><a href="" class="dux-logout bg-red icon-power-off"><i class="iconfont"></i></a></li>
+			<li>
+				<a class="dux-logout bg-red icon-power-off" href="{{ route('logout') }}"
+				   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+					<i class="iconfont"></i>
+				</a>
+
+				<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+					{{ csrf_field() }}
+				</form>
+			</li>
 		</ul>
 	</div>
 </div>

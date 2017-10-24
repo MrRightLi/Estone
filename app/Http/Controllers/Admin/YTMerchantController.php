@@ -14,6 +14,8 @@ class YTMerchantController extends Controller
 
     function __construct()
     {
+        $this->middleware('auth');
+
         $this->merchant = new Merchant();
     }
 

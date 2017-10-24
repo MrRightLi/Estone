@@ -17,11 +17,12 @@ Route::get('YTTest/sendAsyncRequest', 'YTTestController@sendAsyncRequest');
 Route::get('YTTest/GuzzleHttpClient', 'YTTestController@GuzzleHttpClient');
 
 /** 后台路由 **/
-// Authentication Routes
-Auth::routes();
+Route::get('/admin', 'Admin\HomeController@index')->name('admin');
 
-
-Route::get('/home', 'HomeController@index')->name('home');
+// Authentication Routes...
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('admin/index/{route?}', 'Admin\YTAdminController@index')->name('admin_entrance'); // 后台入口界面;
 Route::get('admin/headPage', 'Admin\YTAdminController@headPage');
